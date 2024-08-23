@@ -22,10 +22,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final CodeHistoryRepository codeHistoryRepository;
 
-    public Boolean saveClicks(UserClickRequest request) {
-        return null;
-    }
-
     public String register(UserRegisterRequest request, Model model) {
         User userBuilder = User.builder()
                 .username(request.getUsername())
@@ -40,7 +36,7 @@ public class UserService {
         CodeHistory codeHistory = new CodeHistory();
         codeHistory.setCode(code);
         codeHistory.setCreatedAt(LocalDateTime.now());
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findByUsername(username);
         codeHistory.setUser(user);
         codeHistoryRepository.save(codeHistory);
         List<CodeHistoryDto> list = new ArrayList<>();
@@ -57,7 +53,7 @@ public class UserService {
     }
 
     public CodeHistory login(String code, String username) {
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findByUsername(username);
         CodeHistory codeHistory = codeHistoryRepository.findByUserIdAndCode(user.getId(), code);
         return codeHistory;
     }

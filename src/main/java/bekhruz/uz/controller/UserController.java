@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -25,11 +26,17 @@ public class UserController {
     private final UserRepository userRepository;
     private final GenerateCodeService generateCodeService;
 
-    @GetMapping(value = "/count/clicks")
-    public String saveCountOfClicks(Model model) {
-        List<CountResponseDto> list = generateCodeService.saveCountsOfClick(new UserClickRequest(1, 1));
-        model.addAttribute("response", list);
-        return "click-count";
+    @PostMapping(value = "/count/clicks")
+    public String saveCountOfClicks(@ModelAttribute UserClickRequest request, Model model) {
+        if (request.getX_count() != null) {
+            CountResponseDto xresponse = generateCodeService.saveCountsOfClick(request);
+            model.addAttribute("xresponse", xresponse);
+        }
+        if (request.getY_count() != null) {
+            CountResponseDto yresponse = generateCodeService.saveCountsOfClick(request);
+            model.addAttribute("yresponse", yresponse);
+        }
+        return "data-clicks";
     }
 
     @PostMapping(value = "/generate")
@@ -48,7 +55,7 @@ public class UserController {
             model.addAttribute("message", "Username is not valid!");
             return "register";
         }
-        User user = userRepository.findByUsername(request.getUsername()).get();
+        User user = userRepository.findByUsername(request.getUsername());
         if (user != null) {
             model.addAttribute("message", "Username is already exist!");
             return "register";
@@ -67,12 +74,13 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute UserLoginRequest request, Model model) {
-        User user = userRepository.findByUsername(request.getUsername()).get();
+        User user = userRepository.findByUsername(request.getUsername());
         if (user == null) {
             model.addAttribute("message", "This username has not been registered!");
             return "register";
         }
         userService.login(request.getCode(), user.getUsername());
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("message", "You have successfully logged in!");
         return "click-count";
     }

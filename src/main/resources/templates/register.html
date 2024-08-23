@@ -312,51 +312,6 @@
         margin-top: -1px
     }
 
-    .btn-signup {
-        float: left;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 13px;
-        text-align: center;
-        color: #ffffff;
-        padding-top: 8px;
-        width: 100%;
-        height: 35px;
-        border: none;
-        border-radius: 20px;
-        margin-top: 23px;
-        background-color: #1059FF
-    }
-
-    .btn-signin {
-        float: left;
-        padding-top: 8px;
-        width: 100%;
-        height: 35px;
-        border: none;
-        border-radius: 20px;
-        margin-top: -8px
-    }
-
-    .btn-animate {
-        float: left;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 13px;
-        text-align: center;
-        color: rgba(255, 255, 255, 1);
-        padding-top: 8px;
-        width: 100%;
-        height: 35px;
-        border: none;
-        border-radius: 20px;
-        margin-top: 23px;
-        background-color: rgba(16, 89, 255, 1);
-        left: 0px;
-        top: 0px;
-        transition: all .5s ease, top .5s ease .5s, height .5s ease .5s, background-color .5s ease .75s
-    }
-
     .btn-animate-grow {
         width: 130%;
         height: 625px;
@@ -528,14 +483,14 @@
             </ul>
         </div>
         <div ng-app ng-init="checked = false">
-            <form class="form-signin" action="users/generate" method="post" name="form">
+            <form class="form-signin" action="/users/generate" method="post" name="form">
                 <label for="username" style="font-weight: 700">Username</label>
                 <input class="form-styling" type="text" name="username" placeholder=""/>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary m-2">Generate code</button>
                 </div>
             </form>
-            <form class="form-signup" action="users/register" method="post" name="form">
+            <form class="form-signup" action="/users/register" method="post" name="form">
                 <label for="username" style="font-weight: 700">Username </label>
                 <input class="form-styling" type="text" name="username" id="username" placeholder=""/>
                 <label for="email" style="font-weight: 700">Email</label>

@@ -1,20 +1,15 @@
 package bekhruz.uz.service;
 
-import bekhruz.uz.domain.CodeHistory;
 import bekhruz.uz.domain.User;
 import bekhruz.uz.domain.UserClicksCount;
-import bekhruz.uz.dtos.CodeHistoryDto;
 import bekhruz.uz.dtos.CountResponseDto;
 import bekhruz.uz.dtos.UserClickRequest;
-import bekhruz.uz.repository.CodeHistoryRepository;
 import bekhruz.uz.repository.UserClickCountRepository;
 import bekhruz.uz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 @Service
@@ -30,28 +25,44 @@ public class GenerateCodeService {
         return String.valueOf(fourDigitNumber);
     }
 
-    public List<CountResponseDto> saveCountsOfClick(UserClickRequest request) {
-        List<CountResponseDto> list = new ArrayList<>();
+    public CountResponseDto saveCountsOfClick(UserClickRequest request) {
+        UserClicksCount save = null;
+        User user = userRepository.findByUsername(request.getUsername());
+        UserClicksCount count = userClickCountRepository.findByUserId(user.getId());
         if (request.getX_count() != null) {
-            UserClicksCount userClicksCount = new UserClicksCount();
-            userClicksCount.setXCount(request.getX_count());
-            userClicksCount.setCreationOfClickX(LocalDateTime.now());
-            userClickCountRepository.save(userClicksCount);
+            if (count == null) {
+                UserClicksCount userClicksCount = new UserClicksCount();
+                userClicksCount.setXCount(Integer.valueOf(request.getX_count()));
+                userClicksCount.setCreationOfClickX(LocalDateTime.now());
+                userClicksCount.setUserId(user.getId());
+                save = userClickCountRepository.save(userClicksCount);
+            } else {
+                count.setXCount(Integer.valueOf(count.getXCount() + request.getX_count()));
+                save = userClickCountRepository.save(count);
+            }
         }
         if (request.getY_count() != null) {
-            UserClicksCount userClicksCount = new UserClicksCount();
-            userClicksCount.setYCount(request.getY_count());
-            userClicksCount.setCreationOfClickY(LocalDateTime.now());
-            userClickCountRepository.save(userClicksCount);
+            if (count == null) {
+                UserClicksCount userClicksCount = new UserClicksCount();
+                userClicksCount.setYCount(Integer.valueOf(request.getY_count()));
+                userClicksCount.setCreationOfClickY(LocalDateTime.now());
+                userClicksCount.setUserId(user.getId());
+                save = userClickCountRepository.save(userClicksCount);
+            } else {
+                count.setYCount(Integer.valueOf(count.getYCount() + request.getY_count()));
+                save = userClickCountRepository.save(count);
+            }
         }
-        for (UserClicksCount clicksCount : userClickCountRepository.findAll()) {
-            CountResponseDto dto = new CountResponseDto();
-            dto.setX_count(clicksCount.getXCount());
-            dto.setY_count(clicksCount.getYCount());
-            dto.setDateOfXCount(String.valueOf(clicksCount.getCreationOfClickX()));
-            dto.setDateOfYCount(clicksCount.getCreationOfClickY().toString());
-            list.add(dto);
+        if (request.getX_count() != null) {
+            return CountResponseDto.builder()
+                    .x_count(save.getXCount())
+                    .dateOfXCount(String.valueOf(save.getCreationOfClickX()))
+                    .build();
+        } else {
+            return CountResponseDto.builder()
+                    .y_count(save.getYCount())
+                    .dateOfYCount(String.valueOf(save.getCreationOfClickY()))
+                    .build();
         }
-        return list;
     }
 }

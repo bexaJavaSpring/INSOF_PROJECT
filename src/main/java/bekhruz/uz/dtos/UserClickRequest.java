@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @Builder
 public class UserClickRequest {
-    private Integer x_count;
-    private Integer y_count;
+    private String x_count;
+    private String y_count;
+    private String username;
 }

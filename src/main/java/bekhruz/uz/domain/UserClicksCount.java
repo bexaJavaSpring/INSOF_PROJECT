@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,13 +22,16 @@ public class UserClicksCount {
 
     @Column(name = "creation_of_click_x", columnDefinition = "TIMESTAMP DEFAULT now()")
     private LocalDateTime creationOfClickX;
+
     @Column(name = "creation_of_click_y", columnDefinition = "TIMESTAMP DEFAULT now()")
     private LocalDateTime creationOfClickY;
+
     @Column(name = "x_count")
     private Integer xCount;
+
     @Column(name = "y_count")
     private Integer yCount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
 }

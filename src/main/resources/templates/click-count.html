@@ -3,6 +3,40 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script>
+        function sendData(countType) {
+            const url = '/users/count/clicks';
+            const username = document.getElementById('username').value;
+
+            const payload = {
+                countType: countType,
+                username: username
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function handleXButtonClick() {
+            sendData('x_count');
+        }
+
+        function handleYButtonClick() {
+            sendData('y_count');
+        }
+    </script>
 </head>
 <body>
 <style>
@@ -23,44 +57,11 @@
 <a class="btn-danger" href="/home">Home</a>
 <h2>Main dashboard</h2>
 <div class="container">
-    <div class="alert alert-primary" style="background-color: white; width: 430px" th:text="${message}"></div>
+    <div class="alert alert-primary" style="background-color: white; width: 430px" th:text="${message}  "></div>
     <div class="row">
-        <form class="description-from-type-label" action="/users/count/clicks" method="get" name="form">
-            <tr>
-                <th>
-                    <button class="btn" type="submit" >X pixel</button>
-                </th>
-                <th>
-                    <button class="btn" type="submit" >Y pixel</button>
-                </th>
-            </tr>
-        </form>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>x_count</th>
-                <th>date</th>
-            </tr>
-            </thead>
-            <tr th:each="con:${response}">
-                <td th:text="${con.getY_count()}"></td>
-                <td th:text="${con.getDateOfXCount()}"></td>
-            </tr>
-        </table>
-        <br>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>y_count</th>
-                <th>date</th>
-            </tr>
-            </thead>
-            <tr th:each="con:${response}">
-                <td th:text="${con.getY_count()}"></td>
-                <td th:text="${con.getDateOfYCount()}"></td>
-            </tr>
-        </table>
+        <input type="hidden" id="username" th:text="${username}">
+        <button class="btn" onclick="handleXButtonClick()">Click X</button>
+        <button class="btn" onclick="handleYButtonClick()">Click Y</button>
     </div>
 </div>
 </body>
