@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Title Generator</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<style>
+    .generated_code {
+        text-align: center;
+        border: 1px solid indigo;
+        font-family: "DejaVu Serif Condensed";
+        width: 200px;
+        margin: auto;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.13);
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        max-width: 800px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border-bottom: 2px solid #3e8e41;
+    }
+
+    td {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    caption {
+        font-size: 1.5em;
+        margin: 10px 0;
+        color: #333333;
+    }
+
+    .header_text_cover {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header_text_cover button {
+        margin: 20px;
+        border: 1px solid indigo;
+        width: 70px;
+        height: 30px;
+        border-radius: 10px;
+        background: white;
+
+    }
+
+    .header_text_cover button a {
+        text-decoration: none;
+        color: indigo;
+    }
+
+</style>
+<body>
+<div class="container">
+    <div class="alert alert-primary" style="background-color: white; text-align: center; width: 430px" th:text="${message}"></div>
+    <div class="header_text_cover">
+        <button><a href="/home/back">back</a></button>
+        <h2>Your generation code for login</h2>
+    </div>
+    <p class="generated_code" th:text="${code}"> >/p>
+
+    <br>
+    <table>
+        <caption>History</caption>
+        <thead>
+        <tr>
+            <th>username</th>
+            <th>code</th>
+            <th>creationOfCode</th>
+        </tr>
+        </thead>
+        <tr th:each="h:${history}">
+            <td th:text="${h.getUsername()}"></td>
+            <td th:text="${h.getCode()}"></td>
+            <td th:text="${h.getCreationOfCode()}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
