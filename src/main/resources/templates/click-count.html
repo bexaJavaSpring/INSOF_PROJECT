@@ -4,37 +4,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script>
-        function sendData(countType) {
+        function sendData(data) {
             const url = '/users/count/clicks';
             const username = document.getElementById('username').value;
 
             const payload = {
-                countType: countType,
-                username: username
+                // countType: countType,
+                username: username,
+                ...data
             };
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
         }
 
         function handleXButtonClick() {
-            sendData('x_count');
+            sendData({x_count: 1});
         }
 
         function handleYButtonClick() {
-            sendData('y_count');
+            sendData({y_count: 1});
         }
     </script>
 </head>
@@ -59,9 +45,12 @@
 <div class="container">
     <div class="alert alert-primary" style="background-color: white; width: 430px" th:text="${message}  "></div>
     <div class="row">
-        <input type="hidden" id="username" th:text="${username}">
-        <button class="btn" onclick="handleXButtonClick()">Click X</button>
-        <button class="btn" onclick="handleYButtonClick()">Click Y</button>
+        <input type="hidden" id="username" th:value="${username}">
+
+        <form action="/users/count/clicks" method="post" name="form">
+            <button type="submit" class="btn" onclick="handleXButtonClick()">Click X</button>
+            <button type="submit" class="btn" onclick="handleYButtonClick()">Click Y</button>
+        </form>
     </div>
 </div>
 </body>
