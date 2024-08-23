@@ -25,10 +25,10 @@ public class UserController {
     private final UserRepository userRepository;
     private final GenerateCodeService generateCodeService;
 
-    @PostMapping(value = "/count/clicks")
-    public String saveCountOfClicks(@ModelAttribute UserClickRequest request, Model model) {
-        CountResponseDto countResponseDto = generateCodeService.saveCountsOfClick(request);
-        model.addAttribute("response", List.of(countResponseDto));
+    @GetMapping(value = "/count/clicks")
+    public String saveCountOfClicks(Model model) {
+        List<CountResponseDto> list = generateCodeService.saveCountsOfClick(new UserClickRequest(1, 1));
+        model.addAttribute("response", list);
         return "click-count";
     }
 

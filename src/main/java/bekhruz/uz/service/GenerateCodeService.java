@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,25 +30,28 @@ public class GenerateCodeService {
         return String.valueOf(fourDigitNumber);
     }
 
-    public CountResponseDto saveCountsOfClick(UserClickRequest request) {
-        UserClicksCount save = null;
+    public List<CountResponseDto> saveCountsOfClick(UserClickRequest request) {
+        List<CountResponseDto> list = new ArrayList<>();
         if (request.getX_count() != null) {
             UserClicksCount userClicksCount = new UserClicksCount();
             userClicksCount.setXCount(request.getX_count());
             userClicksCount.setCreationOfClickX(LocalDateTime.now());
-            save = userClickCountRepository.save(userClicksCount);
+            userClickCountRepository.save(userClicksCount);
         }
         if (request.getY_count() != null) {
             UserClicksCount userClicksCount = new UserClicksCount();
             userClicksCount.setYCount(request.getY_count());
             userClicksCount.setCreationOfClickY(LocalDateTime.now());
-            save = userClickCountRepository.save(userClicksCount);
+            userClickCountRepository.save(userClicksCount);
         }
-        return CountResponseDto.builder()
-                .x_count(save.getXCount())
-                .y_count(save.getYCount())
-                .dateOfXCount(String.valueOf(save.getCreationOfClickX()))
-                .dateOfYCount(String.valueOf(save.getCreationOfClickY()))
-                .build();
+        for (UserClicksCount clicksCount : userClickCountRepository.findAll()) {
+            CountResponseDto dto = new CountResponseDto();
+            dto.setX_count(clicksCount.getXCount());
+            dto.setY_count(clicksCount.getYCount());
+            dto.setDateOfXCount(String.valueOf(clicksCount.getCreationOfClickX()));
+            dto.setDateOfYCount(clicksCount.getCreationOfClickY().toString());
+            list.add(dto);
+        }
+        return list;
     }
 }

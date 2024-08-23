@@ -25,14 +25,13 @@
 <div class="container">
     <div class="alert alert-primary" style="background-color: white; width: 430px" th:text="${message}"></div>
     <div class="row">
-        <form class="description-from-type-label" action="/users/count/clicks" method="post" name="form">
-
+        <form class="description-from-type-label" action="/users/count/clicks" method="get" name="form">
             <tr>
                 <th>
-                    <button class="btn">X pixel</button>
+                    <button class="btn" type="submit" >X pixel</button>
                 </th>
                 <th>
-                    <button class="btn">Y pixel</button>
+                    <button class="btn" type="submit" >Y pixel</button>
                 </th>
             </tr>
         </form>
@@ -40,12 +39,12 @@
         <table class="table">
             <thead>
             <tr>
-                <th>x count</th>
+                <th>x_count</th>
                 <th>date</th>
             </tr>
             </thead>
             <tr th:each="con:${response}">
-                <td th:text="${con.getX_count()}"></td>
+                <td th:text="${con.getY_count()}"></td>
                 <td th:text="${con.getDateOfXCount()}"></td>
             </tr>
         </table>
@@ -53,7 +52,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>y count</th>
+                <th>y_count</th>
                 <th>date</th>
             </tr>
             </thead>
