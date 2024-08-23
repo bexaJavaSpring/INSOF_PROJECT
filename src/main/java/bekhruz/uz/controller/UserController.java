@@ -27,18 +27,26 @@ public class UserController {
     public String saveCountOfClicks(@ModelAttribute UserClickRequest request, Model model) {
         if (request.getX_count() != null) {
             CountResponseDto xresponse = generateCodeService.saveCountsOfClick(request);
-            model.addAttribute("xresponse", xresponse);
+            model.addAttribute("xresponse", List.of(xresponse));
+            model.addAttribute("yresponse", List.of(CountResponseDto.builder().y_count(xresponse.getY_count()).dateOfYCount(xresponse.getDateOfYCount()).build()));
         }
         if (request.getY_count() != null) {
             CountResponseDto yresponse = generateCodeService.saveCountsOfClick(request);
-            model.addAttribute("yresponse", yresponse);
+            model.addAttribute("xresponse", List.of(CountResponseDto.builder().x_count(yresponse.getX_count()).dateOfXCount(yresponse.getDateOfXCount()).build()));
+            model.addAttribute("yresponse", List.of(yresponse));
         }
+        model.addAttribute("username", request.getUsername());
         return "data-clicks";
     }
 
     @PostMapping(value = "/generate")
     public String generateCode(@ModelAttribute UserLoginRequest request, Model model) {
         String code = generateCodeService.generateCode();
+        User user = userRepository.findByUsername(request.getUsername());
+        if (user == null) {
+            model.addAttribute("message", "This user is not registered.");
+            return "register";
+        }
         List<CodeHistoryDto> historyList = userService.saveCode(code, request.getUsername());
         model.addAttribute("code", code);
         model.addAttribute("history", historyList);

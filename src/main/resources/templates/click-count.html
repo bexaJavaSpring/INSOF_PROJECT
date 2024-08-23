@@ -3,26 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script>
-        function sendData(data) {
-            const url = '/users/count/clicks';
-            const username = document.getElementById('username').value;
-
-            const payload = {
-                // countType: countType,
-                username: username,
-                ...data
-            };
-        }
-
-        function handleXButtonClick() {
-            sendData({x_count: 1});
-        }
-
-        function handleYButtonClick() {
-            sendData({y_count: 1});
-        }
-    </script>
 </head>
 <body>
 <style>
@@ -44,12 +24,17 @@
 <h2>Main dashboard</h2>
 <div class="container">
     <div class="alert alert-primary" style="background-color: white; width: 430px" th:text="${message}  "></div>
+    <br>
     <div class="row">
-        <input type="hidden" id="username" th:value="${username}">
-
         <form action="/users/count/clicks" method="post" name="form">
-            <button type="submit" class="btn" onclick="handleXButtonClick()">Click X</button>
-            <button type="submit" class="btn" onclick="handleYButtonClick()">Click Y</button>
+            <input type="hidden" name="username" th:value="${username}">
+            <input type="hidden" id="x_count" name="x_count">
+            <button type="submit" class="btn" >Click X</button>
+        </form>
+        <form action="/users/count/clicks" method="post" name="form">
+            <input type="hidden" name="username" th:value="${username}">
+            <input type="hidden" id="y_count" name="y_count">
+            <button type="submit" class="btn" >Click Y</button>
         </form>
     </div>
 </div>

@@ -3,7 +3,6 @@ package bekhruz.uz.service;
 import bekhruz.uz.domain.CodeHistory;
 import bekhruz.uz.domain.User;
 import bekhruz.uz.dtos.CodeHistoryDto;
-import bekhruz.uz.dtos.UserClickRequest;
 import bekhruz.uz.dtos.UserRegisterRequest;
 import bekhruz.uz.repository.CodeHistoryRepository;
 import bekhruz.uz.repository.UserRepository;
@@ -40,7 +39,7 @@ public class UserService {
         codeHistory.setUser(user);
         codeHistoryRepository.save(codeHistory);
         List<CodeHistoryDto> list = new ArrayList<>();
-        for (CodeHistory history : codeHistoryRepository.findAll()) {
+        for (CodeHistory history : codeHistoryRepository.findByUserId(user.getId())) {
             User save = userRepository.findById(history.getUser().getId()).get();
             CodeHistoryDto codeHistoryDto = CodeHistoryDto.builder()
                     .username(save.getUsername())

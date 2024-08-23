@@ -62,10 +62,22 @@
         color: indigo;
     }
 
+    .h2 {
+        text-align: center;
+    }
+
 </style>
 <body>
 <div class="container">
-        <br>
+    <h2 class="h2">History of clicks</h2>
+    <div>
+        <form action="/home/click-count" method="post" name="form">
+            <input type="hidden" name="username" th:value="${username}">
+            <button type="submit" class="btn btn-primary m-2">Back</button>
+        </form>
+    </div>
+
+    <br>
     <table class="table">
         <thead>
         <tr>
@@ -73,9 +85,9 @@
             <th>date</th>
         </tr>
         </thead>
-        <tr>
-            <td th:text="${xresponse.getX_count()}"></td>
-            <td th:text="${xresponse.getDateOfYCount()}"></td>
+        <tr th:each="x:${xresponse}">
+            <td th:text="${x.getX_count()}"></td>
+            <td th:text="${x.getDateOfXCount()}"></td>
         </tr>
     </table>
     <br>
@@ -86,9 +98,9 @@
             <th>date</th>
         </tr>
         </thead>
-        <tr>
-            <td th:text="${yresponse.getY_count()}"></td>
-            <td th:text="${yresponse.getDateOfYCount()}"></td>
+        <tr th:each="y:${yresponse}">
+            <td th:text="${y.getY_count()}"></td>
+            <td th:text="${y.getDateOfYCount()}"></td>
         </tr>
     </table>
 </div>

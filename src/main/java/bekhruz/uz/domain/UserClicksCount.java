@@ -20,11 +20,11 @@ public class UserClicksCount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "creation_of_click_x", columnDefinition = "TIMESTAMP DEFAULT now()")
-    private LocalDateTime creationOfClickX;
+    @Column(name = "creation_of_click_x")
+    private String creationOfClickX;
 
-    @Column(name = "creation_of_click_y", columnDefinition = "TIMESTAMP DEFAULT now()")
-    private LocalDateTime creationOfClickY;
+    @Column(name = "creation_of_click_y")
+    private String creationOfClickY;
 
     @Column(name = "x_count")
     private Integer xCount;
