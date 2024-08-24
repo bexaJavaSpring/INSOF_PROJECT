@@ -17,9 +17,9 @@ ENV APP_HOME=/opt/INSOF_PROJECT
 
 # Set the working directory
 WORKDIR $APP_HOME
-COPY --from=prepared $APP_HOME/target/INSOF_PROJECT.jar $APP_HOME
+COPY --from=prepared $APP_HOME/target/INSOF_PROJECT-0.0.1-SNAPSHOT.jar $APP_HOME
 #
 EXPOSE 7777
 
 # Specify the command to run on container start
-CMD ["java", "-jar", "INSOF_PROJECT.jar"]
+CMD ["java", "-jar", "INSOF_PROJECT-0.0.1-SNAPSHOT.jar"]
