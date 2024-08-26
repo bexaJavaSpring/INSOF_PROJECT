@@ -9,7 +9,7 @@ services:
     image: maven
     container_name: maven
     ports:
-      - "7777:7777"
+      - "7778:7778"
 
   database:
     image: postgres:latest
