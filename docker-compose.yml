@@ -6,8 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: insof_project
-    container_name: insof_project
+    image: maven
+    container_name: maven
     ports:
       - "7777:7777"
 
