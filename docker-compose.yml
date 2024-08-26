@@ -2,6 +2,15 @@ version: '3.8'
 
 services:
 
+  INSOF_PROJECT:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: insof_project
+    container_name: insof_project
+    ports:
+      - "7777:7777"
+
   database:
     image: postgres:latest
     container_name: bekhruz
