@@ -1,29 +1,23 @@
-version: '3.8'
+version: '3.1'
 
 services:
 
-  INSOF_PROJECT:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: maven
-    container_name: maven
-    ports:
-      - "7778:7778"
+#  INSOF_PROJECT:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: maven
+#    container_name: maven
+#    ports:
+#      - "7778:7778"
 
   database:
     image: postgres:latest
-    container_name: bekhruz
+    container_name: postgres
     restart: always
     ports:
-      - '5433:5432'
+      - '5432:5432'
     environment:
       POSTGRES_DB: insof_project
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: bexa
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data: {}
-  storage_data: {}
+      POSTGRES_PASSWORD: password
