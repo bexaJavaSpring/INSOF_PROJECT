@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private     final UserService userService;
     private final UserRepository userRepository;
     private final GenerateCodeService generateCodeService;
 

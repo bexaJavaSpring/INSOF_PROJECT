@@ -1,5 +1,5 @@
 #Stage 1: Prepared Stage
-FROM maven:3-amazoncorretto-21 as prepared
+FROM maven:openjdk as prepared
 ENV APP_HOME=/opt/INSOF_PROJECT
 
 # Set the working directory

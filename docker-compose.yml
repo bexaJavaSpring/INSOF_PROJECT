@@ -18,9 +18,9 @@ services:
     ports:
       - '5433:5432'
     environment:
-      POSTGRES_DB: db_test
+      POSTGRES_DB: insof_project
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
+      POSTGRES_PASSWORD: bexa
     volumes:
       - db_data:/var/lib/postgresql/data
 
